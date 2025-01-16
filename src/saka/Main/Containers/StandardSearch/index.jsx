@@ -64,6 +64,17 @@ export default class extends Component {
     }
   };
 
+  handleBackgroundClick = e => {
+    console.log('saka: bg click')
+    // e.currentTarget is the element to which the handler has been attached
+    if (e.currentTarget == e.target) {
+      browser.runtime.sendMessage({
+        key: 'closeSaka',
+        searchHistory: [...this.props.searchHistory]
+      });
+    }
+  }
+
   handleWheel = slowWheelEvent(
     50,
     () => {
@@ -283,9 +294,26 @@ export default class extends Component {
   };
 
   tryActivateSuggestion = async (index = this.state.selectedIndex) => {
-    const { suggestions, firstVisibleIndex } = this.state;
+    console.log('saka: tryActivateSuggestion', index, this.state.searchString)
+    const { suggestions, firstVisibleIndex, searchString } = this.state;
     const suggestion = suggestions[firstVisibleIndex + index];
-    if (suggestion) {
+    if (
+      searchString.startsWith('>') ||
+      searchString.startsWith('<') ||
+      searchString.startsWith('\\') ||
+      searchString.endsWith('>') ||
+      searchString.endsWith('<') ||
+      searchString.endsWith('\\')
+    ) {
+      await browser.runtime.sendMessage({
+        key: 'search',
+        searchString: searchString.trim()
+      });
+      await browser.runtime.sendMessage({
+        key: 'closeSaka',
+        searchHistory: [...this.props.searchHistory]
+      });
+    } else if (suggestion) {
       if (suggestion.type === 'mode') {
         this.props.setMode(suggestion.mode);
       } else {
@@ -354,7 +382,10 @@ export default class extends Component {
 
     if (!showEmptySearchSuggestions && !searchString) {
       return (
-        <BackgroundImage suggestion={suggestion}>
+        <BackgroundImage
+          suggestion={suggestion}
+          onBackgroundClick={this.handleBackgroundClick}
+        >
           <GUIContainer onWheel={this.handleWheel}>
             <ModeSwitcher setMode={this.props.setMode} />
             <SearchBar
@@ -375,7 +406,10 @@ export default class extends Component {
 
     // TODO: Rename suggestions and suggestion
     return (
-      <BackgroundImage suggestion={suggestion}>
+      <BackgroundImage
+        suggestion={suggestion}
+        onBackgroundClick={this.handleBackgroundClick}
+      >
         <GUIContainer onWheel={this.handleWheel}>
           <ModeSwitcher mode={mode} setMode={this.props.setMode} />
           <SearchBar

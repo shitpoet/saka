@@ -11,3 +11,7 @@ export async function activateSuggestion(suggestion) {
 export async function closeTab(suggestion) {
   return msg('closeTab', suggestion);
 }
+
+export async function search(searchString) {
+  return msg('search', [searchString]);
+}

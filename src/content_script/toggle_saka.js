@@ -12,27 +12,30 @@ if (oldSakaRoot) {
   // create container div
   const newSakaRoot = document.createElement('div');
   newSakaRoot.id = 'saka-root';
-  newSakaRoot.style = `position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2147483647;
-  opacity: 1;
-  pointer-events: none;`;
+  newSakaRoot.style = `
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2147483647;
+    opacity: 1;
+    pointer-events: none;
+  `.trim();
   // create Saka iframe
   const iframe = document.createElement('iframe');
   iframe.id = 'saka';
   iframe.src = chrome.runtime.getURL('saka.html');
-  iframe.style = `z-index: 2147483647;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  border-width: 0;
-  pointer-events: all;
-  }`;
+  iframe.style = `
+    z-index: 2147483647;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-width: 0;
+    pointer-events: all;
+  }`.trim();
   iframe.frameBorder = 0;
   // mount to DOM
   newSakaRoot.appendChild(iframe);

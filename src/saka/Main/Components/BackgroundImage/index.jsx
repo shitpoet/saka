@@ -18,11 +18,12 @@ export default class BackgroundImage extends Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, onBackgroundClick } = this.props;
     const { screenshot } = this.state;
     return (
       <div
         id="background-image"
+        onClick={onBackgroundClick}
         style={screenshot && `background-image: url("${screenshot}")`}
       >
         {children}

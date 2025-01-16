@@ -1,5 +1,17 @@
 # Saka [![GitHub license](https://img.shields.io/github/license/lusakasa/saka.svg)](https://github.com/lusakasa/saka/blob/master/LICENSE) [![Build Status](https://travis-ci.org/lusakasa/saka.svg?branch=master&style=popout-square)](https://travis-ci.org/lusakasa/saka) [![codecov.io Code Coverage](https://codecov.io/gh/lusakasa/saka/branch/master/graph/badge.svg?maxAge=2592000)](https://codecov.io/github/lusakasa/saka?branch=master) [![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/nbdfpcokndmapcollfpjdpjlabnibjdi.svg)](https://chrome.google.com/webstore/detail/saka/nbdfpcokndmapcollfpjdpjlabnibjdi)
 
+## FORK This is my own fork of the latest version (0.17.3) of the original Saka extension
+
+Changes:
+
+1. Limit url length in suggestions because I sometimes have some sensitive information in them and often record my screen
+2. Close popup when the background is clicked
+3. Do google search if the prompt starts or ends with '>' (or `<`, or `\` for lucky searches)
+4. Open new tabs next to the current one (TODO)
+
+
+## Original readme
+
 A browsing assistant for [Firefox](https://addons.mozilla.org/firefox/addon/saka/) and [Chrome](https://chrome.google.com/webstore/detail/saka/nbdfpcokndmapcollfpjdpjlabnibjdi) designed to be fast, intuitive, and beautiful. Inspired by Spotlight. Keyboard-focused but mouse friendly too.
 
 * Lists tabs in order of recency by default, then fuzzy search by title or URL.

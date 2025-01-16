@@ -109,6 +109,44 @@ async function saveSettings(searchHistory) {
   await browser.storage.sync.set({ searchHistory: [...searchHistory] });
 }
 
+async function search(searchString) {
+  // console.log('search src/background_page/index.js ' + searchString)
+  // alert('search for ' + searchString)
+  searchString = searchString.trim()
+  
+  // feeling lucky search vs. normal search
+  let lucky = false
+  if (searchString.startsWith('\\') || searchString.endsWith('\\')) {
+    if (searchString.startsWith('\\')) searchString = searchString.slice(1).trim()
+    if (searchString.endsWith('\\')) searchString = searchString.slice(0, -1).trim()
+    lucky = true
+  }
+  if (searchString.startsWith('>') || searchString.endsWith('>')) {
+    if (searchString.startsWith('>')) searchString = searchString.slice(1).trim()
+    if (searchString.endsWith('>')) searchString = searchString.slice(0, -1).trim()  
+  }
+  if (searchString.startsWith('<') || searchString.endsWith('<')) {
+    if (searchString.startsWith('<')) searchString = searchString.slice(1).trim()
+    if (searchString.endsWith('<')) searchString = searchString.slice(0, -1).trim()  
+  }      
+  let baseUrl = 'https://www.google.com/search?q=' + encodeURIComponent(searchString)
+  let searchUrl = baseUrl + (lucky ? '&btnI=I%27m+Feeling+Lucky' : '')
+  /*await browser.tabs.create({
+    url: searchUrl,
+    active: true
+  });*/
+  chrome.tabs.query({
+    active: true, currentWindow: true
+  }, tabs => {
+    let index = tabs[0].index;
+    chrome.tabs.create({
+      url: searchUrl,
+      index: index + 1,
+      active: true
+    });
+  });  
+}
+
 browser.browserAction.onClicked.addListener(() => {
   toggleSaka();
 });
@@ -134,6 +172,10 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
     case 'closeSaka':
       await saveSettings(message.searchHistory);
       closeSaka(sender.tab);
+      break;
+    case 'search':
+      await search(message.searchString);
+      //closeSaka(sender.tab);
       break;
     default:
       console.error(`Unknown message: '${message}'`);

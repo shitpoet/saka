@@ -15,7 +15,17 @@ async function focusOrCreateTab(url) {
     await browser.tabs.update(existingTab.id, { active: true });
     await browser.windows.update(existingTab.windowId, { focused: true });
   } else {
-    await browser.tabs.create({ url });
+    //await browser.tabs.create({ url });
+    chrome.tabs.query({
+      active: true, currentWindow: true
+    }, tabs => {
+      let index = tabs[0].index;
+      chrome.tabs.create({
+        url,
+        index: index + 1,
+        active: true
+      });
+    });      
   }
 }
 
@@ -52,3 +62,4 @@ export async function activateSuggestion(suggestion) {
 export async function closeTab(suggestion) {
   await browser.tabs.remove(suggestion.tabId);
 }
+
