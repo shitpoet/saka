@@ -6,7 +6,7 @@ Changes:
 
 1. Limit url length in suggestions because I sometimes have some sensitive information in them and often record my screen
 2. Close popup when the background is clicked
-3. Do google search if the prompt starts or ends with '>' (or `<`, or `\` for lucky searches)
+3. Do google search if the prompt starts or ends with `>` (or `<`, or `\` for lucky searches)
 4. Open new tabs next to the current one (TODO)
 
 
