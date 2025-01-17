@@ -8,6 +8,7 @@ Changes:
 2. Close popup when the background is clicked
 3. Do google search if the prompt starts or ends with `>` (or `<`, or `\` for lucky searches)
 4. Open new tabs next to the current one
+5. Fix bug with loss of a focus when the popup is opened while the page is loading
 
 
 ## Original readme

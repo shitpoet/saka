@@ -40,4 +40,19 @@ if (oldSakaRoot) {
   // mount to DOM
   newSakaRoot.appendChild(iframe);
   document.documentElement.appendChild(newSakaRoot);
+
+  // in some cases the input box loses focus
+  // in this case we need to focus the iframe + the search input
+  // but the search input is unaccessible from the content script
+  // so the search input refocuses itself
+  // and here we just refocus the iframe
+  function focus() {
+    // try to keep the input box focued
+    console.log('saka: refocus iframe')
+    iframe.focus()
+  }
+  for (let eventName of ['blur', 'focusout']) {
+    iframe.focus()  // makes blur event to be fired
+    iframe.addEventListener(eventName, focus, true)
+  }
 }

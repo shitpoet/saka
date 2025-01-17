@@ -358,7 +358,9 @@ export default class extends Component {
   };
 
   handleBlur = e => {
+    console.log('saka: search bar blur')
     this.props.updateSearchHistory(e.target.value);
+    e.currentTarget.focus()
   };
 
   handleButtonClick = () => {
