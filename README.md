@@ -9,6 +9,8 @@ Changes:
 3. Do google search if the prompt starts or ends with `>` (or `<`, or `\` for lucky searches)
 4. Open new tabs next to the current one
 5. Fix bug with loss of a focus when the popup is opened while the page is loading
+6. Removed context menu item
+7. Ability to open the popup in tabs or bookmarks mode by different hotkeys (Toggle Saka #1 and Toggle Saka #3 actions in Chrome's Keyboard shortcuts)
 
 
 ## Original readme

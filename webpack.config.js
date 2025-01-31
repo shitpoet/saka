@@ -31,6 +31,8 @@ module.exports = function webpackConfig(env) {
     entry: {
       background_page: 'src/background_page/index.js',
       toggle_saka: 'src/content_script/toggle_saka.js',
+      toggle_saka_tabs: 'src/content_script/toggle_saka_tabs.js',
+      toggle_saka_bookmarks: 'src/content_script/toggle_saka_bookmarks.js',
       // 'extensions': './src/pages/extensions/index.js',
       // 'info': './src/pages/info/index.js',
       // 'options': './src/pages/options/index.js',

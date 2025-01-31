@@ -7,7 +7,7 @@ window.recentlyClosed = recentlyClosed;
 
 let lastTabId;
 
-async function toggleSaka(tabId) {
+async function toggleSaka(tabId, mode = 'bookmarks') {
   if (SAKA_DEBUG) console.group('toggleSaka');
   // Get the specified tab, or the current tab if none is specified
   const currentTab =
@@ -46,17 +46,17 @@ async function toggleSaka(tabId) {
       } catch (e) {
         if (SAKA_DEBUG) console.error(`Failed to remove tab ${currentTab.url}`);
       }
-      // Otherwise, try to load Saka into the current tab
     } else {
+      // Otherwise, try to load Saka into the current tab
       try {
         await browser.tabs.executeScript(currentTab.id, {
-          file: '/toggle_saka.js',
+          file: '/toggle_saka_' + mode + '.js',
           runAt: 'document_start',
           matchAboutBlank: true
         });
         if (SAKA_DEBUG) console.log(`Loaded Saka into tab ${currentTab.url}`);
-        // If loading Saka into the current tab fails, create a new tab
       } catch (e) {
+        // If loading Saka into the current tab fails, create a new tab
         try {
           const screenshot = await browser.tabs.captureVisibleTab();
           await browser.storage.local.set({ screenshot });
@@ -78,8 +78,8 @@ async function toggleSaka(tabId) {
           );
       }
     }
-    // If tab couldn't be found (e.g. because query was made from devtools) create a new tab
   } else {
+    // If tab couldn't be found (e.g. because query was made from devtools) create a new tab
     await browser.tabs.create({
       url: '/saka.html'
     });
@@ -113,7 +113,7 @@ async function search(searchString) {
   // console.log('search src/background_page/index.js ' + searchString)
   // alert('search for ' + searchString)
   searchString = searchString.trim()
-  
+
   // feeling lucky search vs. normal search
   let lucky = false
   if (searchString.startsWith('\\') || searchString.endsWith('\\')) {
@@ -123,12 +123,12 @@ async function search(searchString) {
   }
   if (searchString.startsWith('>') || searchString.endsWith('>')) {
     if (searchString.startsWith('>')) searchString = searchString.slice(1).trim()
-    if (searchString.endsWith('>')) searchString = searchString.slice(0, -1).trim()  
+    if (searchString.endsWith('>')) searchString = searchString.slice(0, -1).trim()
   }
   if (searchString.startsWith('<') || searchString.endsWith('<')) {
     if (searchString.startsWith('<')) searchString = searchString.slice(1).trim()
-    if (searchString.endsWith('<')) searchString = searchString.slice(0, -1).trim()  
-  }      
+    if (searchString.endsWith('<')) searchString = searchString.slice(0, -1).trim()
+  }
   let baseUrl = 'https://www.google.com/search?q=' + encodeURIComponent(searchString)
   let searchUrl = baseUrl + (lucky ? '&btnI=I%27m+Feeling+Lucky' : '')
   /*await browser.tabs.create({
@@ -144,7 +144,7 @@ async function search(searchString) {
       index: index + 1,
       active: true
     });
-  });  
+  });
 }
 
 browser.browserAction.onClicked.addListener(() => {
@@ -154,6 +154,8 @@ browser.browserAction.onClicked.addListener(() => {
 browser.commands.onCommand.addListener(command => {
   switch (command) {
     case 'toggleSaka':
+      toggleSaka(undefined, 'tabs');
+      break;
     case 'toggleSaka2':
     case 'toggleSaka3':
     case 'toggleSaka4':
@@ -192,8 +194,8 @@ browser.runtime.onMessageExternal.addListener(message => {
   }
 });
 
-browser.contextMenus.create({
+/*browser.contextMenus.create({
   title: 'Saka',
   contexts: ['all'],
   onclick: () => toggleSaka()
-});
+});*/

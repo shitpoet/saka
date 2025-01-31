@@ -3,7 +3,7 @@
 //   * if found, remove it
 //   * if not found, create and show it
 
-console.log('toggle_saka.js with default mode')
+console.log('toggle_saka.js with tabs mode')
 
 const oldSakaRoot = document.querySelector('#saka-root');
 if (oldSakaRoot) {
@@ -27,7 +27,7 @@ if (oldSakaRoot) {
   // create Saka iframe
   const iframe = document.createElement('iframe');
   iframe.id = 'saka';
-  iframe.src = chrome.runtime.getURL('saka.html');
+  iframe.src = chrome.runtime.getURL('saka.html') + '?mode=tabs';
   iframe.style = `
     z-index: 2147483647;
     position: fixed;

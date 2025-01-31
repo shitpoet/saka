@@ -3,7 +3,7 @@
 //   * if found, remove it
 //   * if not found, create and show it
 
-console.log('toggle_saka.js with default mode')
+console.log('toggle_saka.js with bookmarks mode')
 
 const oldSakaRoot = document.querySelector('#saka-root');
 if (oldSakaRoot) {

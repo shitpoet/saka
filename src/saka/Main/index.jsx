@@ -19,6 +19,9 @@ export default class Main extends Component {
 
   async componentDidMount() {
     const sakaSettings = await this.fetchSakaSettings();
+    if (window.location.href.includes('?mode=tabs')) {
+      sakaSettings.mode = 'tab'
+    }
     this.setState(sakaSettings);
   }
 

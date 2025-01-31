@@ -1,7 +1,8 @@
 {
   "name": "Saka",
-  "version": "0.17.3",
-  "author": "Sufyan Dawoodjee, Uzair Shamim",
+  "version": "0.17.3.7",
+  "version_name": "0.17.3 fork v7",
+  "author": "Sufyan Dawoodjee, Uzair Shamim, Ruslan Odintosv's fork",
   "description": "Saka - elegent tab search, selection, and beyond",
   "manifest_version": 2,
   "options_ui": {
